@@ -1,0 +1,27 @@
+<snippet>
+  <!-- Example: Hello, ${1:this} is a ${2:snippet}. -->
+  <content><![CDATA[
+set this_date [lindex $argv 0]
+set password "${1:password}"
+
+spawn -noecho  /usr/local/bin/scp ${2:user}@${3:xxx.xxx.xxx.xxx}:/data1/directory/\${this_date}/file*.log  /data1/directory/\${this_date}
+expect {
+        "yes/no" {send -- "yes\r";
+        exp_continue;
+        }
+        "assword:" {
+                send -- "${password}\r";
+                exp_continue;
+        }
+        "100%" {
+                exit
+        }
+
+}
+]]></content>
+  <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+  <tabTrigger>expect_scp_file</tabTrigger>
+  <description>create a expect spawn scp file</description>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope>source.shell, support.function.builtin.shell</scope>
+</snippet>
